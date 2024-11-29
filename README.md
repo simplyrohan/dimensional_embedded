@@ -15,6 +15,9 @@ make build
 To build with MiniFB
 
 # Embedded Setup
-To run this on an ESP32 (or any Arduino device really, but I haven't tested) make an Arduino project. Then copy the contents of the `renderer` directory into the project (Arduino is unable to find C++ files if they are in a sub directory).
+To run this on an ESP32 (or any Arduino device really, but I haven't tested) make an Arduino project. Then copy the contents of the `renderer` directory into the project (Arduino is unable to find C++ files if they are in a sub directory). You can do this with
+```
+make setup-arduino
+```
 
 Look at `main.ino` for how to set it up with a TFT.
