@@ -1,27 +1,21 @@
 #include "transform.h"
 
-vertex *scaleVertex(vertex *p, double scale)
+void scaleVertex(vertex *p, double scale)
 {
-    vertex *copy = new vertex();
-    copy->x = p->x * scale;
-    copy->y = p->y * scale;
-    copy->z = p->z * scale;
-    return copy;
+    p->x = p->x * scale;
+    p->y = p->y * scale;
+    p->z = p->z * scale;
 }
 
-vertex *translateVertex(vertex *p, double x, double y, double z)
+void translateVertex(vertex *p, double x, double y, double z)
 {
-    vertex *copy = new vertex();
-    copy->x = p->x + x;
-    copy->y = p->y + y;
-    copy->z = p->z + z;
-    return copy;
+    p->x = p->x + x;
+    p->y = p->y + y;
+    p->z = p->z + z;
 }
 
-vertex *rotateVertex(vertex *p, double angleX, double angleY, double angleZ)
+void rotateVertex(vertex *p, double angleX, double angleY, double angleZ)
 {
-    vertex *copy = new vertex();
-
     double y = p->y;
     double z = p->z;
     double x = p->x;
@@ -33,9 +27,7 @@ vertex *rotateVertex(vertex *p, double angleX, double angleY, double angleZ)
     double sZ = sin(radians(angleZ));
     double cZ = cos(radians(angleZ));
 
-    copy->x = x * cY * cZ + y * (sX * sY * cZ - cX * sZ) + z * (cX * sY * cZ + sX * sZ);
-    copy->y = x * cY * sZ + y * (sX * sY * sZ + cX * cZ) + z * (cX * sY * sZ - sX * cZ);
-    copy->z = -x * sY + y * sX * cY + z * cX * cY;
-
-    return copy;
+    p->x = x * cY * cZ + y * (sX * sY * cZ - cX * sZ) + z * (cX * sY * cZ + sX * sZ);
+    p->y = x * cY * sZ + y * (sX * sY * sZ + cX * cZ) + z * (cX * sY * sZ - sX * cZ);
+    p->z = -x * sY + y * sX * cY + z * cX * cY;
 }

@@ -16,6 +16,6 @@ void rasterizeTriangle(int x1, int y1,
                        int u2, int v2,
                        int u3, int v3,
                        int z1, int z2, int z3,
-                       screen buffer, int color, double *zBuffer);
+                       screen buffer, double *zBuffer);
 
-void render(mesh **meshes, int numMeshes, screen *buffer, int color);
+void render(mesh **meshes, int numMeshes, screen *buffer);

@@ -15,7 +15,7 @@ void rasterizeTriangle(int x1, int y1,
                        int u2, int v2,
                        int u3, int v3,
                        int z1, int z2, int z3,
-                       screen *buffer, int color, double *zBuffer)
+                       screen *buffer, double *zBuffer)
 {
     // lcd->drawLine(x1, y1, x2, y2, color);
     // lcd->drawLine(x2, y2, x3, y3, color);
@@ -62,7 +62,7 @@ void rasterizeTriangle(int x1, int y1,
     }
 }
 
-void render(mesh **meshes, int numMeshes, screen *buffer, int color)
+void render(mesh **meshes, int numMeshes, screen *buffer)
 {
     // double *zBuffer = new double[buffer->width * buffer->height];
     // make z buffer full of -1s
@@ -84,25 +84,29 @@ void render(mesh **meshes, int numMeshes, screen *buffer, int color)
             vertex v3 = t.v3;
 
             // Transform
-            // vertex *transformed1 = rotateVertex(&v1, m->rotation->x, m->rotation->y, m->rotation->z);
-            // vertex *transformed2 = rotateVertex(&v2, m->rotation->x, m->rotation->y, m->rotation->z);
-            // vertex *transformed3 = rotateVertex(&v3, m->rotation->x, m->rotation->y, m->rotation->z);
-            vertex *transformed1 = scaleVertex(&v1, m->scale);
-            vertex *transformed2 = scaleVertex(&v2, m->scale);
-            vertex *transformed3 = scaleVertex(&v3, m->scale);
+            // vertex *transformed1 = scaleVertex(&v1, m->scale);
+            // vertex *transformed2 = scaleVertex(&v2, m->scale);
+            // vertex *transformed3 = scaleVertex(&v3, m->scale);
+            // copy vertex
+            vertex *transformed1 = new vertex(v1);
+            vertex *transformed2 = new vertex(v2);
+            vertex *transformed3 = new vertex(v3);
+
+            scaleVertex(transformed1, m->scale);
+            scaleVertex(transformed2, m->scale);
+            scaleVertex(transformed3, m->scale);
 
             // Rotate
-            transformed1 = rotateVertex(transformed1, m->rotation->x, m->rotation->y, m->rotation->z);
-            transformed2 = rotateVertex(transformed2, m->rotation->x, m->rotation->y, m->rotation->z);
-            transformed3 = rotateVertex(transformed3, m->rotation->x, m->rotation->y, m->rotation->z);
+            rotateVertex(transformed1, m->rotation->x, m->rotation->y, m->rotation->z);
+            rotateVertex(transformed2, m->rotation->x, m->rotation->y, m->rotation->z);
+            rotateVertex(transformed3, m->rotation->x, m->rotation->y, m->rotation->z);
 
             // Translate
-            transformed1 = translateVertex(transformed1, m->translation->x, m->translation->y, m->translation->z);
-            transformed2 = translateVertex(transformed2, m->translation->x, m->translation->y, m->translation->z);
-            transformed3 = translateVertex(transformed3, m->translation->x, m->translation->y, m->translation->z);
+            translateVertex(transformed1, m->translation->x, m->translation->y, m->translation->z);
+            translateVertex(transformed2, m->translation->x, m->translation->y, m->translation->z);
+            translateVertex(transformed3, m->translation->x, m->translation->y, m->translation->z);
 
-            // Draw triangle
-
+            // Projection
             point p1 = {(transformed1->x * FOCAL_LENGTH) / (transformed1->z + FOCAL_LENGTH), (transformed1->y * FOCAL_LENGTH) / (transformed1->z + FOCAL_LENGTH)};
             point p2 = {(transformed2->x * FOCAL_LENGTH) / (transformed2->z + FOCAL_LENGTH), (transformed2->y * FOCAL_LENGTH) / (transformed2->z + FOCAL_LENGTH)};
             point p3 = {(transformed3->x * FOCAL_LENGTH) / (transformed3->z + FOCAL_LENGTH), (transformed3->y * FOCAL_LENGTH) / (transformed3->z + FOCAL_LENGTH)};
@@ -124,7 +128,7 @@ void render(mesh **meshes, int numMeshes, screen *buffer, int color)
                               t.t2.x, t.t2.y,
                               t.t3.x, t.t3.y,
                               transformed1->z, transformed2->z, transformed3->z,
-                              buffer, color, zBuffer);
+                              buffer, zBuffer);
 
             delete transformed1;
             delete transformed2;
