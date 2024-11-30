@@ -1,5 +1,5 @@
 # dimensional_embedded
-A rewrite of the "dimensional_graphics" project in C/C++
+A rewrite of the [dimensional_graphics](https://github.com/simplyrohan/dimensional_graphics) project in C/C++ for embedded systems (ESP32 or Arduino)
 
 # Desktop Setup
 To test this on a desktop enviroment, use [`MiniFB`](https://github.com/emoon/minifb). Just run 
@@ -31,4 +31,4 @@ python obj2h.py path/to/model.obj
 (This is mainly a task list for myself)
  - Rename transformations (translation->position, consolidating things into a struct, vertex->vector3, etc)
  - Textures
- - Scene system
+ - Scene system 
