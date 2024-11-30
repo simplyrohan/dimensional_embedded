@@ -5,41 +5,50 @@
 #include <math.h>
 #include "transform.h"
 
-// struct transformation {
-//     vertex *scale;
-//     vertex *rotation;
-//     vertex *translation;
-// };
-// typedef struct transformation transformation;
-
-void scaleVertex(vector3 *p, double scale)
+typedef struct
 {
-    p->x = p->x * scale;
-    p->y = p->y * scale;
-    p->z = p->z * scale;
+    vector3 *rotation;
+    vector3 *translation;
+    vector3 *scale;
+} transformation;
+
+void scaleVertex(vector3 *p, vector3 *scale)
+{
+    p->x = p->x * scale->x;
+    p->y = p->y * scale->y;
+    p->z = p->z * scale->z;
+
 }
 
-void translateVertex(vector3 *p, double x, double y, double z)
+void translateVertex(vector3 *p, vector3 *translation)
 {
-    p->x = p->x + x;
-    p->y = p->y + y;
-    p->z = p->z + z;
+    p->x = p->x + translation->x;
+    p->y = p->y + translation->y;
+    p->z = p->z + translation->z;
 }
 
-void rotateVertex(vector3 *p, double angleX, double angleY, double angleZ)
+void rotateVertex(vector3 *p, vector3 *rotation)
 {
     double y = p->y;
     double z = p->z;
     double x = p->x;
 
-    double sX = sin(radians(angleX));
-    double cX = cos(radians(angleX));
-    double sY = sin(radians(angleY));
-    double cY = cos(radians(angleY));
-    double sZ = sin(radians(angleZ));
-    double cZ = cos(radians(angleZ));
+    double sX = sin(radians(rotation->x));
+    double cX = cos(radians(rotation->x));
+    double sY = sin(radians(rotation->y));
+    double cY = cos(radians(rotation->y));
+    double sZ = sin(radians(rotation->z));
+    double cZ = cos(radians(rotation->z));
 
     p->x = x * cY * cZ + y * (sX * sY * cZ - cX * sZ) + z * (cX * sY * cZ + sX * sZ);
     p->y = x * cY * sZ + y * (sX * sY * sZ + cX * cZ) + z * (cX * sY * sZ - sX * cZ);
     p->z = -x * sY + y * sX * cY + z * cX * cY;
+}
+
+
+void applyTransformation(vector3 *p, transformation *t)
+{
+    scaleVertex(p, t->scale);
+    rotateVertex(p, t->rotation);
+    translateVertex(p, t->translation);
 }

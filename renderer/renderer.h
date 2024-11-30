@@ -53,9 +53,9 @@ void rasterizeTriangle(int x1, int y1,
                 continue;
             }
             double w0 = ((y2 - y3) * (px - x3) + (x3 - x2) * (py - y3)) /
-                      denominator;
+                        denominator;
             double w1 = ((y3 - y1) * (px - x3) + (x1 - x3) * (py - y3)) /
-                      denominator;
+                        denominator;
             double w2 = 1 - w0 - w1;
 
             if (w0 >= 0 && w1 >= 0 && w2 >= 0)
@@ -110,19 +110,9 @@ void render(mesh **meshes, int numMeshes, texture *tex, screen *buffer)
             vector3 *transformed2 = new vector3(v2);
             vector3 *transformed3 = new vector3(v3);
 
-            scaleVertex(transformed1, m->scale);
-            scaleVertex(transformed2, m->scale);
-            scaleVertex(transformed3, m->scale);
-
-            // Rotate
-            rotateVertex(transformed1, m->rotation->x, m->rotation->y, m->rotation->z);
-            rotateVertex(transformed2, m->rotation->x, m->rotation->y, m->rotation->z);
-            rotateVertex(transformed3, m->rotation->x, m->rotation->y, m->rotation->z);
-
-            // Translate
-            translateVertex(transformed1, m->translation->x, m->translation->y, m->translation->z);
-            translateVertex(transformed2, m->translation->x, m->translation->y, m->translation->z);
-            translateVertex(transformed3, m->translation->x, m->translation->y, m->translation->z);
+            applyTransformation(transformed1, m->transformation);
+            applyTransformation(transformed2, m->transformation);
+            applyTransformation(transformed3, m->transformation);
 
             // Projection
             if (transformed1->z <= 0 && transformed2->z <= 0 && transformed3->z <= 0)

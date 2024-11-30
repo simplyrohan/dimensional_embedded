@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "renderer/types.h"
 
 #include "renderer/renderer.h"
 // #include "cube.h"
@@ -14,7 +15,13 @@ static uint32_t *g_buffer = 0x0;
 
 screen g_screen;
 
-mesh *meshes[] = {&cobble};
+mesh *meshes[] = {
+    // genCobble(-0.5, 2, -0.5, 50),
+    // genCobble(0.5, 2, -0.5, 50),
+    // genCobble(0.5, 2, 0.5, 50),
+    // genCobble(-0.5, 2, 0.5, 50),
+    &cobble
+};
 
 uint32_t fsf_to_color(uint16_t fsf)
 {
@@ -53,7 +60,7 @@ int main()
             g_screen.buffer[screenPos] = 0;
         }
 
-        cobble.rotation->y += 1;
+        cobble.transformation->rotation->y += 1;
         render(meshes, 1, &texture_image, &g_screen);
 
         // clear g_screen buffer
