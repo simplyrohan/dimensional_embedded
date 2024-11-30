@@ -1,6 +1,13 @@
 # dimensional_embedded
 A rewrite of the [dimensional_graphics](https://github.com/simplyrohan/dimensional_graphics) project in C/C++ for embedded systems (ESP32 or Arduino)
 
+# Features
+ - Transformations (rotation, etc)
+ - Textures
+ - Tools for importing files (obj2h, tex2h)
+ - Support for both desktop and embeded systems (Arduino, ESP32)
+ - Supports many output methods with a simple buffer (Adafruit GFX, MiniFB)
+
 # Desktop Setup
 To test this on a desktop enviroment, use [`MiniFB`](https://github.com/emoon/minifb). Just run 
 ```
@@ -27,9 +34,16 @@ A tool to convert Wavefront OBJ files into headers compatible with this project.
 
 ```
 python obj2h.py path/to/model.obj
+```
+
+# tex2h
+A tool to convert images into textures for models
+```
+python tex2h.py path/to/image.png
+```
+
 # TODO
 (This is mainly a task list for myself)
  - Rename transformations (translation->position, consolidating things into a struct, vertex->vector3, etc)
- - Textures
  - Scene system 
  - Fix broken rotation system (maybe use quanternions, euler sucks rn (idek if it is euler, everything is so messed up))

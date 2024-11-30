@@ -68,7 +68,7 @@ for i, pixel in enumerate(pixels):
 stuff += "};\n"
 
 stuff += f"""
-const texture texture_{title[0]} = {{
+texture texture_{title[0]} = {{
     .width = {width},
     .height = {height},
     .data = textureData,
