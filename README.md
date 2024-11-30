@@ -21,3 +21,7 @@ make setup-arduino
 ```
 
 Look at `main.ino` for how to set it up with a TFT.
+
+# TODO
+(This is mainly a task list for myself)
+ - Rename transformations (translation->position, consolidating things into a struct, vertex->vector3, etc)

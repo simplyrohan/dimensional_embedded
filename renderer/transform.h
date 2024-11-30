@@ -5,6 +5,13 @@
 #include <math.h>
 #include "transform.h"
 
+// struct transformation {
+//     vertex *scale;
+//     vertex *rotation;
+//     vertex *translation;
+// };
+// typedef struct transformation transformation;
+
 void scaleVertex(vertex *p, double scale)
 {
     p->x = p->x * scale;
