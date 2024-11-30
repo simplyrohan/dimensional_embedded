@@ -5,7 +5,7 @@ setup-desktop:
 	@echo "\033[32m[DONE] Finished![0m"
 
 build-desktop:
-	g++ -std=c++14 main.cpp renderer/renderer.cpp renderer/transform.cpp -Iminifb/include -Lminifb/build -lminifb -framework Cocoa -framework MetalKit -framework Metal -o main
+	g++ -std=c++14 main.cpp -Iminifb/include -Lminifb/build -lminifb -framework Cocoa -framework MetalKit -framework Metal -o main
 
 setup-arduino:
 	cp -r renderer/ ./

@@ -30,6 +30,19 @@ triangle triangles[12] = {
     {vertices[4], vertices[5], vertices[1], textureCoords[0], textureCoords[1], textureCoords[2]},
     {vertices[4], vertices[1], vertices[0], textureCoords[0], textureCoords[2], textureCoords[3]}};
 
-mesh cube = {triangles, 12, new vertex({0, 0, 0}), new vertex({0, 0, 200}), 100};
+// mesh cube = {triangles, 12, new vertex({0, 0, 0}), new vertex({0, 0, 200}), 100};
 
-mesh *meshes[] = {&cube};
+// mesh *meshes[] = {&cube};
+
+mesh *genCube(double x, double y, double z)
+{
+    mesh *cube = new mesh;
+
+    cube->triangles = triangles;
+    cube->numTriangles = 12;
+    cube->rotation = new vertex({0, 0, 0});
+    cube->translation = new vertex({x * 50, y * 50 + 100, z * 50 + 50});
+    cube->scale = 25;
+
+    return cube;
+}
