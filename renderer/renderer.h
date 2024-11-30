@@ -23,13 +23,21 @@ void rasterizeTriangle(int x1, int y1,
                        texture *tex,
                        screen *buffer, double *zBuffer)
 {
-    // lcd->drawLine(x1, y1, x2, y2, color);
-    // lcd->drawLine(x2, y2, x3, y3, color);
-    // lcd->drawLine(x3, y3, x1, y1, color);
     int triX = min(min(x1, x2), x3);
     int triY = min(min(y1, y2), y3);
     int triW = max(max(x1, x2), x3) - triX;
     int triH = max(max(y1, y2), y3) - triY;
+
+    // double u1i = u1 / (z1);
+    // double v1i = v1 / (z1);
+    // double u2i = u2 / (z2);
+    // double v2i = v2 / (z2);
+    // double u3i = u3 / (z3);
+    // double v3i = v3 / (z3);
+
+    // double z1i = 1.0f / z1;
+    // double z2i = 1.0f / z2;
+    // double z3i = 1.0f / z3;
 
     for (int x = 0; x < triW; x++)
     {
@@ -45,13 +53,15 @@ void rasterizeTriangle(int x1, int y1,
                 continue;
             }
             double w0 = ((y2 - y3) * (px - x3) + (x3 - x2) * (py - y3)) /
-                        denominator;
+                      denominator;
             double w1 = ((y3 - y1) * (px - x3) + (x1 - x3) * (py - y3)) /
-                        denominator;
+                      denominator;
             double w2 = 1 - w0 - w1;
 
             if (w0 >= 0 && w1 >= 0 && w2 >= 0)
             {
+                // double zi = w0 * z1i + w1 * z2i + w2 * z3i;
+                // double z = 1 / zi;
                 double z = w0 * z1 + w1 * z2 + w2 * z3;
 
                 if (zBuffer[px + py * buffer->width] < z && zBuffer[px + py * buffer->width] != -1)
@@ -60,19 +70,17 @@ void rasterizeTriangle(int x1, int y1,
                 }
                 zBuffer[px + py * buffer->width] = z;
 
-
+                // double ui = w0 * u1i + w1 * u2i + w2 * u3i;
+                // double vi = w0 * v1i + w1 * v2i + w2 * v3i;
+                // double u = ui * z;
+                // double v = vi * z;
                 double u = w0 * u1 + w1 * u2 + w2 * u3;
                 double v = w0 * v1 + w1 * v2 + w2 * v3;
-                // printf("u: %d, v: %d\n", u, v);
+                // //print z1, z2, z3, z1i, z2i, z3i, zi, z
 
-                uint16_t color = tex->data[(int)(u* tex->width) + (int)(v * tex->height) * tex->width];
+                uint16_t color = tex->data[(int)(u * tex->width) + (int)(v * tex->height) * tex->width];
 
-                // uint16_t color = rgb_to_565(u * 255, v * 255, 0);
-                // printf("color: %d\n", color);
-
-                // buffer->buffer[px + py * buffer->width] = rgb_to_565(w0 * 255, w1 * 255, w2 * 255);
                 buffer->buffer[px + py * buffer->width] = color;
-
             }
         }
     }
