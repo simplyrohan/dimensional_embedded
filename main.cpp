@@ -4,7 +4,8 @@
 #include <stdint.h>
 
 #include "renderer/renderer.h"
-#include "cube.h"
+// #include "cube.h"
+#include "minecraft.h"
 
 static uint32_t g_width = 800;
 static uint32_t g_height = 600;
@@ -12,13 +13,13 @@ static uint32_t *g_buffer = 0x0;
 
 screen g_screen;
 
-// 2x2x1 sube
-mesh *meshes[4] = {
-    genCube(-0.5, 0, 0),
-    genCube(0.5, 0, 0),
-    genCube(-0.5, 0, 1),
-    genCube(0.5, 0, 1)
+texture tex = {
+    2,
+    2,
+    new uint16_t[4]{0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF},
 };
+
+mesh *meshes[] = {&minecraft};
 
 uint32_t fsf_to_color(uint16_t fsf)
 {
@@ -57,8 +58,8 @@ int main()
             g_screen.buffer[screenPos] = 0;
         }
 
-        // cube.rotation->y += 1;
-        render(meshes, 4, &g_screen);
+        minecraft.rotation->y += 1;
+        render(meshes, 1, &tex, &g_screen);
 
         // clear g_screen buffer
 

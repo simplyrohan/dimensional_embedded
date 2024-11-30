@@ -4,6 +4,7 @@
 #include "mesh.h"
 #include "transform.h"
 #include "screen.h"
+#include "texture.h"
 
 #define FOCAL_LENGTH 246
 
@@ -15,10 +16,11 @@ uint32_t rgb_to_565(uint8_t r, uint8_t g, uint8_t b)
 void rasterizeTriangle(int x1, int y1,
                        int x2, int y2,
                        int x3, int y3,
-                       int u1, int v1,
-                       int u2, int v2,
-                       int u3, int v3,
+                       double u1, double v1,
+                       double u2, double v2,
+                       double u3, double v3,
                        int z1, int z2, int z3,
+                       texture *tex,
                        screen *buffer, double *zBuffer)
 {
     // lcd->drawLine(x1, y1, x2, y2, color);
@@ -50,31 +52,38 @@ void rasterizeTriangle(int x1, int y1,
 
             if (w0 >= 0 && w1 >= 0 && w2 >= 0)
             {
-                // lcd->writePixel(px, py, color);
-                // buffer->buffer[px + py * buffer->width] = rgb_to_565(255, 255, 255);
                 double z = w0 * z1 + w1 * z2 + w2 * z3;
-                // printf("z: %f\n", z);
+
                 if (zBuffer[px + py * buffer->width] < z && zBuffer[px + py * buffer->width] != -1)
                 {
                     continue;
                 }
                 zBuffer[px + py * buffer->width] = z;
-                buffer->buffer[px + py * buffer->width] = rgb_to_565(w0 * 255, w1 * 255, w2 * 255);
-                // buffer->buffer[px + py * buffer->width] = rgb_to_565(z / 400 * 255, 0, 0);
+
+
+                double u = w0 * u1 + w1 * u2 + w2 * u3;
+                double v = w0 * v1 + w1 * v2 + w2 * v3;
+                // printf("u: %d, v: %d\n", u, v);
+
+                uint16_t color = rgb_to_565(u * 255, v * 255, 0);
+                // printf("color: %d\n", color);
+
+                // buffer->buffer[px + py * buffer->width] = rgb_to_565(w0 * 255, w1 * 255, w2 * 255);
+                buffer->buffer[px + py * buffer->width] = color;
+
             }
         }
     }
 }
 
-void render(mesh **meshes, int numMeshes, screen *buffer)
+void render(mesh **meshes, int numMeshes, texture *tex, screen *buffer)
 {
-    // double *zBuffer = new double[buffer->width * buffer->height];
-    // make z buffer full of -1s
     double *zBuffer = new double[buffer->width * buffer->height];
     for (int i = 0; i < buffer->width * buffer->height; i++)
     {
         zBuffer[i] = -1;
     }
+    // memset(zBuffer, -1, buffer->width * buffer->height * sizeof(double));
 
     for (int i = 0; i < numMeshes; i++)
     {
@@ -87,10 +96,6 @@ void render(mesh **meshes, int numMeshes, screen *buffer)
             vertex v3 = t.v3;
 
             // Transform
-            // vertex *transformed1 = scaleVertex(&v1, m->scale);
-            // vertex *transformed2 = scaleVertex(&v2, m->scale);
-            // vertex *transformed3 = scaleVertex(&v3, m->scale);
-            // copy vertex
             vertex *transformed1 = new vertex(v1);
             vertex *transformed2 = new vertex(v2);
             vertex *transformed3 = new vertex(v3);
@@ -154,9 +159,6 @@ void render(mesh **meshes, int numMeshes, screen *buffer)
             p3.x = (p3.x) + (buffer->width / 2);
             p3.y = (p3.y) + (buffer->height / 2);
 
-            // lcd->drawLine(p1.x, p1.y, p2.x, p2.y, color);
-            // lcd->drawLine(p2.x, p2.y, p3.x, p3.y, color);
-            // lcd->drawLine(p3.x, p3.y, p1.x, p1.y, color);
             rasterizeTriangle(p1.x, p1.y,
                               p2.x, p2.y,
                               p3.x, p3.y,
@@ -164,7 +166,7 @@ void render(mesh **meshes, int numMeshes, screen *buffer)
                               t.t2.x, t.t2.y,
                               t.t3.x, t.t3.y,
                               transformed1->z, transformed2->z, transformed3->z,
-                              buffer, zBuffer);
+                              tex, buffer, zBuffer);
 
             delete transformed1;
             delete transformed2;
