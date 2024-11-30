@@ -32,3 +32,4 @@ python obj2h.py path/to/model.obj
  - Rename transformations (translation->position, consolidating things into a struct, vertex->vector3, etc)
  - Textures
  - Scene system 
+ - Fix broken rotation system (maybe use quanternions, euler sucks rn (idek if it is euler, everything is so messed up))

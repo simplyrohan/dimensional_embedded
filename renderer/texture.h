@@ -4,6 +4,6 @@
 struct texture {
     int width;
     int height;
-    uint16_t *data;
+    const uint16_t *data;
 };
 typedef struct texture texture;

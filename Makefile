@@ -7,6 +7,9 @@ setup-desktop:
 build-desktop:
 	g++ -std=c++14 main.cpp -Iminifb/include -Lminifb/build -lminifb -framework Cocoa -framework MetalKit -framework Metal -o main
 
+dev-desktop:
+	g++ -std=c++14 main.cpp -Iminifb/include -Lminifb/build -lminifb -framework Cocoa -framework MetalKit -framework Metal -o main && ./main
+
 setup-arduino:
 	cp -r renderer/ ./
 

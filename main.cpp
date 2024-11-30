@@ -5,7 +5,8 @@
 
 #include "renderer/renderer.h"
 // #include "cube.h"
-#include "minecraft.h"
+#include "cobble.h"
+#include "image.h"
 
 static uint32_t g_width = 800;
 static uint32_t g_height = 600;
@@ -13,13 +14,7 @@ static uint32_t *g_buffer = 0x0;
 
 screen g_screen;
 
-texture tex = {
-    2,
-    2,
-    new uint16_t[4]{0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF},
-};
-
-mesh *meshes[] = {&minecraft};
+mesh *meshes[] = {&cobble};
 
 uint32_t fsf_to_color(uint16_t fsf)
 {
@@ -58,8 +53,8 @@ int main()
             g_screen.buffer[screenPos] = 0;
         }
 
-        minecraft.rotation->y += 1;
-        render(meshes, 1, &tex, &g_screen);
+        cobble.rotation->y += 1;
+        render(meshes, 1, &texture_image, &g_screen);
 
         // clear g_screen buffer
 

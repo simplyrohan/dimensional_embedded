@@ -65,7 +65,9 @@ void rasterizeTriangle(int x1, int y1,
                 double v = w0 * v1 + w1 * v2 + w2 * v3;
                 // printf("u: %d, v: %d\n", u, v);
 
-                uint16_t color = rgb_to_565(u * 255, v * 255, 0);
+                uint16_t color = tex->data[(int)(u* tex->width) + (int)(v * tex->height) * tex->width];
+
+                // uint16_t color = rgb_to_565(u * 255, v * 255, 0);
                 // printf("color: %d\n", color);
 
                 // buffer->buffer[px + py * buffer->width] = rgb_to_565(w0 * 255, w1 * 255, w2 * 255);

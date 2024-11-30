@@ -1,3 +1,6 @@
 minifb/*
 .vscode/*
 main
+
+*.obj
+*.mtl
