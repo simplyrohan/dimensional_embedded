@@ -22,6 +22,13 @@ make setup-arduino
 
 Look at `main.ino` for how to set it up with a TFT.
 
+# obj2h
+A tool to convert Wavefront OBJ files into headers compatible with this project.
+
+```
+python obj2h.py path/to/model.obj
 # TODO
 (This is mainly a task list for myself)
  - Rename transformations (translation->position, consolidating things into a struct, vertex->vector3, etc)
+ - Textures
+ - Scene system
