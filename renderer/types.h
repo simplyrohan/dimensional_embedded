@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * @struct vector3
  * @brief A vector in 3D space. Can be used to represent any data with three components (rotation, translation, scale, etc.).
@@ -5,12 +7,12 @@
  * @param y The y coordinate.
  * @param z The z coordinate.
  */
-typedef struct vector3
+typedef struct
 {
     double x;
     double y;
     double z;
-};
+} vector3;
 
 /**
  * @struct vector2
@@ -18,8 +20,8 @@ typedef struct vector3
  * @param x The x coordinate.
  * @param y The y coordinate.
  */
-typedef struct vector2
+typedef struct
 {
     double x;
     double y;
-};
+} vector2;

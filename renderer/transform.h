@@ -12,21 +12,21 @@
 // };
 // typedef struct transformation transformation;
 
-void scaleVertex(vertex *p, double scale)
+void scaleVertex(vector3 *p, double scale)
 {
     p->x = p->x * scale;
     p->y = p->y * scale;
     p->z = p->z * scale;
 }
 
-void translateVertex(vertex *p, double x, double y, double z)
+void translateVertex(vector3 *p, double x, double y, double z)
 {
     p->x = p->x + x;
     p->y = p->y + y;
     p->z = p->z + z;
 }
 
-void rotateVertex(vertex *p, double angleX, double angleY, double angleZ)
+void rotateVertex(vector3 *p, double angleX, double angleY, double angleZ)
 {
     double y = p->y;
     double z = p->z;

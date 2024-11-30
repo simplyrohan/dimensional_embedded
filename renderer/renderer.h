@@ -101,14 +101,14 @@ void render(mesh **meshes, int numMeshes, texture *tex, screen *buffer)
         for (int j = 0; j < m->numTriangles; j++)
         {
             triangle t = m->triangles[j];
-            vertex v1 = t.v1;
-            vertex v2 = t.v2;
-            vertex v3 = t.v3;
+            vector3 v1 = t.v1;
+            vector3 v2 = t.v2;
+            vector3 v3 = t.v3;
 
             // Transform
-            vertex *transformed1 = new vertex(v1);
-            vertex *transformed2 = new vertex(v2);
-            vertex *transformed3 = new vertex(v3);
+            vector3 *transformed1 = new vector3(v1);
+            vector3 *transformed2 = new vector3(v2);
+            vector3 *transformed3 = new vector3(v3);
 
             scaleVertex(transformed1, m->scale);
             scaleVertex(transformed2, m->scale);
@@ -131,9 +131,9 @@ void render(mesh **meshes, int numMeshes, texture *tex, screen *buffer)
             }
 
             // Projection
-            point p1;
-            point p2;
-            point p3;
+            vector2 p1;
+            vector2 p2;
+            vector2 p3;
 
             if (transformed1->z == 0)
             {
