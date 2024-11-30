@@ -1,32 +1,5 @@
 #pragma once
-
-/**
- * @struct point
- * @brief A point in 2D space.
- * @param x The x coordinate.
- * @param y The y coordinate.
- */
-struct point
-{
-    double x;
-    double y;
-};
-typedef struct point point;
-
-/**
- * @struct vertex
- * @brief A point in 3D space.
- * @param x The x coordinate.
- * @param y The y coordinate.
- * @param z The z coordinate.
- */
-struct vertex
-{
-    double x;
-    double y;
-    double z;
-};
-typedef struct vertex vertex;
+#include "types.h"
 
 /**
  * @struct triangle
@@ -40,13 +13,13 @@ typedef struct vertex vertex;
  */
 struct triangle
 {
-    vertex v1;
-    vertex v2;
-    vertex v3;
+    vector3 v1;
+    vector3 v2;
+    vector3 v3;
 
-    point t1;
-    point t2;
-    point t3;
+    vector2 t1;
+    vector2 t2;
+    vector2 t3;
 
     // vertex norm1;
     // vertex norm2;
@@ -68,8 +41,8 @@ struct mesh
     triangle *triangles;
     int numTriangles;
 
-    vertex *rotation;
-    vertex *translation;
+    vector3 *rotation;
+    vector3 *translation;
     double scale;
 };
 typedef struct mesh mesh;
