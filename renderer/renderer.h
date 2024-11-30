@@ -46,6 +46,11 @@ void rasterizeTriangle(int x1, int y1,
             int px = triX + x;
             int py = triY + y;
 
+            if (px < 0 || px >= buffer->width || py < 0 || py >= buffer->height)
+            {
+                continue;
+            }
+
             // Barycentric coordinates
             float denominator = ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
             if (denominator == 0)
@@ -63,7 +68,10 @@ void rasterizeTriangle(int x1, int y1,
                 // double zi = w0 * z1i + w1 * z2i + w2 * z3i;
                 // double z = 1 / zi;
                 double z = w0 * z1 + w1 * z2 + w2 * z3;
-
+                if (z < 0)
+                {
+                    continue;
+                }
                 if (zBuffer[px + py * buffer->width] < z && zBuffer[px + py * buffer->width] != -1)
                 {
                     continue;
@@ -86,7 +94,7 @@ void rasterizeTriangle(int x1, int y1,
     }
 }
 
-void render(mesh **meshes, int numMeshes, screen *buffer)
+void render(mesh **meshes, int numMeshes, screen *buffer, transformation *camera)
 {
     double *zBuffer = new double[buffer->width * buffer->height];
     for (int i = 0; i < buffer->width * buffer->height; i++)
@@ -114,6 +122,18 @@ void render(mesh **meshes, int numMeshes, screen *buffer)
             applyTransformation(transformed1, m->transformation);
             applyTransformation(transformed2, m->transformation);
             applyTransformation(transformed3, m->transformation);
+
+            translateVertex(transformed1, camera->translation);
+            translateVertex(transformed2, camera->translation);
+            translateVertex(transformed3, camera->translation);
+
+            rotateVertex(transformed1, camera->rotation);
+            rotateVertex(transformed2, camera->rotation);
+            rotateVertex(transformed3, camera->rotation);
+
+            // applyTransformation(transformed1, camera);
+            // applyTransformation(transformed2, camera);
+            // applyTransformation(transformed3, camera);
 
             // Projection
             if (transformed1->z <= 0 && transformed2->z <= 0 && transformed3->z <= 0)
