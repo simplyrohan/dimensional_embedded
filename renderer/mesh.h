@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 #include "transform.h"
+#include "texture.h"
 
 /**
  * @struct triangle
@@ -46,5 +47,6 @@ struct mesh
     // vector3 *translation;
     // double scale;
     transformation *transformation;
+    texture *texture;
 };
 typedef struct mesh mesh;

@@ -61,7 +61,7 @@ int main()
         }
 
         cobble.transformation->rotation->y += 1;
-        render(meshes, 1, &texture_image, &g_screen);
+        render(meshes, 1, &g_screen);
 
         // clear g_screen buffer
 

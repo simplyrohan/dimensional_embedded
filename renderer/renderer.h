@@ -86,7 +86,7 @@ void rasterizeTriangle(int x1, int y1,
     }
 }
 
-void render(mesh **meshes, int numMeshes, texture *tex, screen *buffer)
+void render(mesh **meshes, int numMeshes, screen *buffer)
 {
     double *zBuffer = new double[buffer->width * buffer->height];
     for (int i = 0; i < buffer->width * buffer->height; i++)
@@ -98,6 +98,7 @@ void render(mesh **meshes, int numMeshes, texture *tex, screen *buffer)
     for (int i = 0; i < numMeshes; i++)
     {
         mesh *m = meshes[i];
+        texture *tex = m->texture;
         for (int j = 0; j < m->numTriangles; j++)
         {
             triangle t = m->triangles[j];
