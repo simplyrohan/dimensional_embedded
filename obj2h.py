@@ -63,7 +63,7 @@ stuff += "};\n"
 # Texure coordinates
 stuff += """
 // Texture coordinates
-vector2 textureCoords[] = {
+point textureCoords[] = {
 """
 
 for texture in textures:
@@ -72,7 +72,7 @@ for texture in textures:
 stuff += "};\n"
 
 # triangles
-stuff += "triangle faces[] = {\n"
+stuff += "vector2 faces[] = {\n"
 
 for face in faces:
     stuff += (
