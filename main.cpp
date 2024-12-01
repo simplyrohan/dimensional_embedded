@@ -16,18 +16,14 @@ static uint32_t *g_buffer = 0x0;
 screen g_screen;
 
 transformation camera = {
-    new vector3({0, 0, 0}),   // Rotation
+    new vector3({0, 0, 0}), // Rotation
     new vector3({0, 0, 0}), // Translation
-    new vector3({1, 1, 1}),   // Scale
+    new vector3({1, 1, 1}), // Scale
 };
 
-mesh *meshes[] = {
-    // genCobble(-0.5, 2, -0.5, 50),
-    // genCobble(0.5, 2, -0.5, 50),
-    // genCobble(0.5, 2, 0.5, 50),
-    // genCobble(-0.5, 2, 0.5, 50),
-    &cobble
-};
+mesh *meshes[256];
+
+mfb_timer *timer = mfb_timer_create();
 
 uint32_t fsf_to_color(uint16_t fsf)
 {
@@ -57,6 +53,16 @@ int main()
     g_screen.height = g_height;
     g_screen.buffer = new uint16_t[g_width * g_height];
 
+    // Populate mesh array
+    for (int x = 0; x < 16; x++)
+    {
+        for (int z = 0; z < 16; z++)
+        {
+            mesh *m = genCobble(x - 7.5, 5, z -5, 50);
+            meshes[x * 16 + z] = m;
+        }
+    }
+
     mfb_update_state state;
     do
     {
@@ -66,10 +72,9 @@ int main()
             g_screen.buffer[screenPos] = 0;
         }
 
-        cobble.transformation->rotation->y += 1;
-        render(meshes, 1, &g_screen, &camera);
-
-        // clear g_screen buffer
+        // cobble.transformation->rotation->y += 1;
+        render(meshes, 256, &g_screen, &camera);
+        printf("fps: %f\n", 1.0 / mfb_timer_delta(timer));
 
         state = mfb_update_ex(window, g_buffer, g_width, g_height);
         if (state != STATE_OK)

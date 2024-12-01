@@ -52,26 +52,28 @@ triangle faces[] = {
     {vertices[4], vertices[0], vertices[1], textureCoords[0], textureCoords[19], textureCoords[14]},
 };
 
-mesh cobble = {
-    faces,
-    12,
-    new transformation({
+// mesh cobble = {
+//     faces,
+//     12,
+//     new transformation({
+//         new vector3({0, 0, 0}),   // Rotation
+//         new vector3({0, 0, 200}), // Translation
+//         new vector3({100, 100, 100}),   // Scale
+//     }),
+//     &texture_image
+// };
+
+mesh *genCobble(double x, double y, double z, double scale)
+{
+    mesh *cobble = new mesh();
+
+    cobble->triangles = faces;
+    cobble->numTriangles = 12;
+    cobble->transformation = new transformation({
         new vector3({0, 0, 0}),   // Rotation
-        new vector3({0, 0, 200}), // Translation
-        new vector3({100, 100, 100}),   // Scale
-    }),
-    &texture_image
-};
-
-// mesh *genCobble(double x, double y, double z, double scale)
-// {
-//     mesh *cobble = new mesh();
-
-//     cobble->triangles = faces;
-//     cobble->numTriangles = 12;
-
-//     cobble->transformation->rotation = new vector3({0, 0, 0});
-//     cobble->transformation->translation = new vector3({x * scale, y * scale, z * scale + 100});
-//     cobble->transformation->scale = new vector3({scale, scale, scale});
-//     return cobble;
-// }
+        new vector3({x*scale, y*scale, z*scale + 100}), // Translation
+        new vector3({scale/2, scale/2, scale/2}),   // Scale
+    });
+    cobble->texture = &texture_image;
+    return cobble;
+}
