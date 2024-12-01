@@ -9,10 +9,10 @@ A rewrite of the [dimensional_graphics](https://github.com/simplyrohan/dimension
  - Supports many output methods with a simple buffer (Adafruit GFX, MiniFB)
 
 <video width="320" height="240" controls>
-  <source src="assets/embedded_cobblestone.mp4" type="video/mp4">
+  <source src="https://github.com/simplyrohan/dimensional_embedded/blob/main/assets/embedded_cobblestone.mp4" type="video/mp4">
 </video>
 <video width="320" height="240" controls>
-  <source src="assets/embedded_cube.mp4" type="video/mp4">
+  <source src="https://github.com/simplyrohan/dimensional_embedded/blob/main/assets/embedded_cube.mp4" type="video/mp4">
 </video>
 
 ![](assets/desktop_cobblestone.png)
