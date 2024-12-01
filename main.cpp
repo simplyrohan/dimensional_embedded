@@ -15,6 +15,12 @@ static uint32_t *g_buffer = 0x0;
 
 screen g_screen;
 
+transformation camera = {
+    new vector3({0, 0, 0}),   // Rotation
+    new vector3({0, 0, 0}), // Translation
+    new vector3({1, 1, 1}),   // Scale
+};
+
 mesh *meshes[] = {
     // genCobble(-0.5, 2, -0.5, 50),
     // genCobble(0.5, 2, -0.5, 50),
@@ -61,7 +67,7 @@ int main()
         }
 
         cobble.transformation->rotation->y += 1;
-        render(meshes, 1, &g_screen);
+        render(meshes, 1, &g_screen, &camera);
 
         // clear g_screen buffer
 
