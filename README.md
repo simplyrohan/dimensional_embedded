@@ -8,6 +8,11 @@ A rewrite of the [dimensional_graphics](https://github.com/simplyrohan/dimension
  - Support for both desktop and embeded systems (Arduino, ESP32)
  - Supports many output methods with a simple buffer (Adafruit GFX, MiniFB)
 
+![](assets/embedded_cobblestone.mp4)
+![](assets/embedded_cube.mp4)
+![](assets/desktop_cobblestone.png)
+
+
 # Desktop Setup
 To test this on a desktop enviroment, use [`MiniFB`](https://github.com/emoon/minifb). Just run 
 ```
